@@ -1,0 +1,222 @@
+<form [formGroup]="leaseForm">
+    <div class="leasePageMainDiv">
+        <div style="font-size: larger;font-weight: bold;text-align: center;">Apply FinLease</div>
+        <div style="margin: 10px 0px 10px 10px;">
+            <div class="accountOfficeCss">Account officer / CSS</div>
+            <mat-accordion #accordion="matAccordion" multi="true">
+                <mat-expansion-panel hideToggle style="margin-right: 10px;" [expanded]="firstPanel">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            APPLICANT INFO
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-2"><mat-form-field class="example-full-width">
+                                <mat-label>Created by</mat-label>
+                                <input matInput formControlName="createdBy">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2"><mat-form-field class="example-full-width">
+                                <mat-label>Created time(In UTC)</mat-label>
+                                <input matInput formControlName="createdTime" type="datetime-local">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2"><mat-form-field class="example-full-width" *ngIf="isApplied">
+                            <mat-label>Reference</mat-label>
+                            <input matInput formControlName="referenceId">
+                        </mat-form-field>
+                    </div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    style="margin-right: 10px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            BANK DETAILS
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Customer number</mat-label>
+                                <input matInput formControlName="customerNumber">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2"><mat-form-field class="example-full-width">
+                                <mat-label>Account number's</mat-label>
+                                <input matInput formControlName="customerAccountNumber" (keypress)="numberOnly($event)">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3" style="font-weight: bold;">Phone number for Finlease Officer to contact
+                            customer</div>
+                        <div class="col-md-2">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Customer phone number</mat-label>
+                                <input matInput formControlName="customerPhoneNumber" (keypress)="numberOnly($event)">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="title" style="width:180px;font-weight: normal;">Title</label><br>
+                            <select name="title" id="title" formControlName="title">
+                                <option value="" selected disabled>Choose title</option>
+                                <option value="I">I</option>
+                                <option value="We">We</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Customer Name</mat-label>
+                                <input matInput formControlName="customerName">
+                            </mat-form-field></div>
+                    </div>
+                    <div style="font-weight: bold;">wish to apply for leasing facilities within the MCB Group for the
+                        purpose of acquiring a
+                        vehicle as per description below.</div>
+                </mat-expansion-panel>
+
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    style="margin-right: 10px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            DESCRIPTION OF ASSET TO BE LEASED
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Make</mat-label>
+                                <input matInput formControlName="assetMake">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2"><mat-form-field class="example-full-width">
+                                <mat-label>Model</mat-label>
+                                <input matInput formControlName="assetModel">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Expected Delivery Date</mat-label>
+                                <input matInput formControlName="assetDeliveryDate" type="date">
+                            </mat-form-field></div>
+                        <div class="col-md-2"><mat-form-field class="example-full-width">
+                                <mat-label>Purpose</mat-label>
+                                <input matInput formControlName="assetPurpose">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    style="margin-right: 10px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            PROPOSED DETAIL OF LEASE
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Requirec amount(MUR) excluding VAT</mat-label>
+                                <input matInput formControlName="requiredAmount" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Lease period in months</mat-label>
+                                <input matInput formControlName="leasePeriod" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    style="margin-right: 10px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            PROJECTED CASH FLOW
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Monthly Income</mat-label>
+                                <input matInput formControlName="monthlyIncome" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Other Income</mat-label>
+                                <input matInput formControlName="otherIncome" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Total Income</mat-label>
+                                <input matInput formControlName="totalIncome" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Total commitment(MCB)</mat-label>
+                                <input matInput formControlName="totalCommitmentMCB" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Total commitment(Other institutions)</mat-label>
+                                <input matInput formControlName="totalCommitmentOther" (keypress)="numberOnly($event)">
+                            </mat-form-field></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Credit Turnover</mat-label>
+                                <input matInput formControlName="creditTurnover">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>Debit Turnover</mat-label>
+                                <input matInput formControlName="debitTurnover">
+                            </mat-form-field></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="leaseType" style="width:180px;font-weight: normal;">Lease Type</label><br>
+                            <select name="leaseType" id="leaseType" formControlName="leaseType">
+                                <option value="" selected disabled>Choose lease type</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Setup plan">Setup plan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>'Set up' parameter</mat-label>
+                                <input matInput formControlName="setupParameter">
+                            </mat-form-field></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Comment / recommendations</label>
+                            <textarea maxlength="50" style="width:480px" formControlName="commentRecommendation">
+                                </textarea>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    style="margin-right: 10px;">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="accountOfficeCss">
+                            PROPOSER
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row">
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>User ID</mat-label>
+                                <input matInput formControlName="proposerUserId" (focusout)="onProposedUserSelect()">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>User name</mat-label>
+                                <input matInput formControlName="propsedUserName">
+                            </mat-form-field></div>
+                        <div class="col-md-3"><mat-form-field class="example-full-width">
+                                <mat-label>User Buisness Unit</mat-label>
+                                <input matInput formControlName="proposedUserBU">
+                            </mat-form-field></div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+            <div style="margin-top: 10px;">
+                <button class="btnCss" (click)="applyLease()" [disabled]="!leaseForm.valid || disableSubmitBtn">Submit</button>
+                <button class="btnCss" style="margin-left: 10px;margin-right: 10px;" (click)="print()" [disabled]="!leaseForm.valid">Print</button>
+                <button class="btnCss" (click)="back()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>

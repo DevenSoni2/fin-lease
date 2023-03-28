@@ -1,0 +1,68 @@
+<form [formGroup]="leaseApprovalForm">
+    <div class="leasePageMainDiv">
+        <div style="font-size: larger;font-weight: bold;text-align: center;">Approve Lease</div>
+        <div style="margin: 10px 0px 10px 10px;">
+            <div class="row">
+                <div class="col-md-3"><mat-form-field class="example-full-width">
+                    <mat-label>Approval Datetime(In UTC)</mat-label>
+                    <input matInput formControlName="approvalDate" type="datetime-local">
+                </mat-form-field>
+            </div>
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Approval amount</mat-label>
+                        <input matInput formControlName="approvalAmount" (keypress)="numberOnly($event)">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Fixed interest rate applicable</mat-label>
+                        <input matInput formControlName="interestRate" (keypress)="numberOnly($event)">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Monthly repayment</mat-label>
+                        <input matInput formControlName="monthlyRepayment" (keypress)="numberOnly($event)">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Residual value</mat-label>
+                        <input matInput formControlName="residualValue" (keypress)="numberOnly($event)">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <label for="decision" style="width:180px;font-weight: normal;">Decision</label><br>
+                    <select name="decision" id="decision" formControlName="decision">
+                        <option value="" selected disabled>Select Decision</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Declined">Declined</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Other Conditions</label><br>
+                    <textarea  style="width:480px" formControlName="otherConditions">
+                        </textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Comments</label><br>
+                    <textarea  style="width:480px" formControlName="comments">
+                        </textarea>
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                <button class="btnCss" (click)="updateLeaseApplication()" [disabled]="!leaseApprovalForm.valid">Submit</button>
+                <button class="btnCss" style="margin-left: 10px;margin-right: 10px;" (click)="back()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</form>
