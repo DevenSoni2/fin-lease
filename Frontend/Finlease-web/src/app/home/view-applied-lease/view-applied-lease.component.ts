@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MatTableDataSource } from "@angular/material";
 import { Router } from "@angular/router";
 import { LeaseService } from "src/app/service/lease.service";
 
@@ -20,16 +21,28 @@ export class ViewAppliedLeaseComponent implements OnInit {
         this.roleId = sessionStorage.getItem("roleId");
         this.fetchList();
     }
+    applyFilter1(filterValue: any) {
+        filterValue = filterValue.trim();
+        filterValue = filterValue.toLowerCase();
+        this.leaseList.filter = filterValue;
+    }
+    applyFilter2(filterValue: any) {
+        filterValue = filterValue.trim();
+        filterValue = filterValue.toLowerCase();
+        this.closedleaseList.filter = filterValue;
+    }
     /**
      * fetch list
      */
     fetchList() {
         this.leaseService.fetchAppliedLeaseHistory("Open").subscribe(data => {
             this.leaseList = data;
+            this.leaseList = new MatTableDataSource(data);
         })
         if (this.roleId == 1) {
             this.leaseService.fetchAppliedLeaseHistory("Closed").subscribe(result => {
                 this.closedleaseList = result;
+                this.closedleaseList = new MatTableDataSource(result);
             });
         }
     }

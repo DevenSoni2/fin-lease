@@ -13,11 +13,22 @@ import com.nagarro.fin.lease.app.payload.request.CustomerRequestDto;
 import com.nagarro.fin.lease.app.payload.response.CustomerResponseDTO;
 import com.nagarro.fin.lease.app.service.CustomerService;
 
+/**
+ * The Class CustomerServiceImpl.
+ */
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
+	/** The customer repository. */
 	@Autowired
 	private CustomerRepository customerRepository;
 
+	/**
+	 * Fetch customer detail.
+	 *
+	 * @param customerId the customer id
+	 * @return the customer response DTO
+	 */
 	@Override
 	public CustomerResponseDTO fetchCustomerDetail(String customerId) {
 		Optional<Customer> opCustomer = customerRepository.findById(customerId);
@@ -32,6 +43,12 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerResponseDTO;
 	}
 
+	/**
+	 * Register customer.
+	 *
+	 * @param customerRequestDto the customer request dto
+	 * @return the string
+	 */
 	@Override
 	public String registerCustomer(CustomerRequestDto customerRequestDto) {
 		Optional<Customer> opCustomer = customerRepository.findByUserName(customerRequestDto.getUserName());

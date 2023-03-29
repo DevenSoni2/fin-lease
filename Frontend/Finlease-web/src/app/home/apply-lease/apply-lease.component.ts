@@ -1,4 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatAccordion, MatSnackBar } from "@angular/material";
 import { Router } from "@angular/router";
@@ -18,6 +18,7 @@ export class ApplyLeaseComponent {
   firstPanel = true;
   isApplied = false;
   disableSubmitBtn = false;
+  hideApplyButton = false;
   @ViewChild('accordion', { static: true }) Accordion: MatAccordion;
 
   constructor(public fb: FormBuilder, private leaseService: LeaseService,
@@ -52,6 +53,7 @@ export class ApplyLeaseComponent {
       title: ['', Validators.required]
     });
   }
+
   applyLease() {
     console.log(this.leaseForm.value);
     this.leaseReq = new LeaseRequest();

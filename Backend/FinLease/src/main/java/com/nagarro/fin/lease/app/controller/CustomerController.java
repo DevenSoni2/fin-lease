@@ -16,23 +16,41 @@ import com.nagarro.fin.lease.app.payload.request.CustomerRequestDto;
 import com.nagarro.fin.lease.app.payload.response.CustomResponse;
 import com.nagarro.fin.lease.app.service.CustomerService;
 
+/**
+ * The Class CustomerController.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/lease")
 public class CustomerController {
 
+	/** The customer service. */
 	@Autowired
 	private CustomerService customerService;
-	
+
+	/**
+	 * Register user.
+	 *
+	 * @param customerRequestDto the customer request dto
+	 * @return the response entity
+	 */
 	@PostMapping("/registerCustomer")
 	@PreAuthorize("hasAuthority('EMPLOYEE') or hasAuthority('ADMIN')")
-	public ResponseEntity<?> registerUser( @RequestBody CustomerRequestDto customerRequestDto) {
+	public ResponseEntity<?> registerUser(@RequestBody CustomerRequestDto customerRequestDto) {
 		String customerId = customerService.registerCustomer(customerRequestDto);
-		return new ResponseEntity<>(new CustomResponse("Customer registered successfully", customerId), HttpStatus.CREATED);
+		return new ResponseEntity<>(new CustomResponse("Customer registered successfully", customerId),
+				HttpStatus.CREATED);
 	}
+
+	/**
+	 * Fetch customer detail.
+	 *
+	 * @param customerId the customer id
+	 * @return the response entity
+	 */
 	@GetMapping("/fetchCustomerDetail")
 	@PreAuthorize("hasAuthority('EMPLOYEE') or hasAuthority('ADMIN')")
-	public ResponseEntity<?> fetchCustomerDetail(@RequestParam String customerId){
+	public ResponseEntity<?> fetchCustomerDetail(@RequestParam String customerId) {
 		return new ResponseEntity<>(customerService.fetchCustomerDetail(customerId), HttpStatus.OK);
 	}
 }
