@@ -19,6 +19,10 @@ export class LeaseService {
         let url = AppConstants.BACKEND_HOST + '/api/lease/fetchProposerDetail/' + userId;
         return this.http.get<any>(url);
     }
+    getCustomerDet(customerId: string): Observable<any> {
+        let url = AppConstants.BACKEND_HOST + '/api/lease/fetchCustomerDetail?customerId=' + customerId;
+        return this.http.get<any>(url);
+    }
     applyLease(leaseReq: LeaseRequest) {
         let url = AppConstants.BACKEND_HOST + '/api/lease/apply';
         return this.http.post<any>(url, leaseReq);

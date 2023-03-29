@@ -89,7 +89,7 @@ public class LeaseDetail {
 
 	/** The proposer user id. */
 	@ManyToOne
-	private User proposerUserId;
+	private Customer proposerUserId;
 
 	/** The status. */
 	@Column(name = "status")
@@ -528,7 +528,7 @@ public class LeaseDetail {
 	 *
 	 * @return the proposer user id
 	 */
-	public User getProposerUserId() {
+	public Customer getProposerUserId() {
 		return proposerUserId;
 	}
 
@@ -537,7 +537,7 @@ public class LeaseDetail {
 	 *
 	 * @param proposerUserId the new proposer user id
 	 */
-	public void setProposerUserId(User proposerUserId) {
+	public void setProposerUserId(Customer proposerUserId) {
 		this.proposerUserId = proposerUserId;
 	}
 

@@ -76,7 +76,7 @@ class UserServiceImplTest {
 		Set<Role> roles = new HashSet<>();
 		Role role = new Role();
 		role.setId(2);
-		role.setName(ERole.USER);
+		role.setName(ERole.EMPLOYEE);
 		roles.add(role);
 		User user = new User();
 		user.setRoles(roles);
@@ -100,7 +100,7 @@ class UserServiceImplTest {
 		Set<Role> roles = new HashSet<>();
 		Role role = new Role();
 		role.setId(2);
-		role.setName(ERole.USER);
+		role.setName(ERole.EMPLOYEE);
 		roles.add(role);
 		User user = new User();
 		user.setRoles(roles);
@@ -192,7 +192,7 @@ class UserServiceImplTest {
 			UserRequestDTO userRequestDTO = new UserRequestDTO();
 			userRequestDTO.setUsername("username");
 			userRequestDTO.setPassword("abc@12");
-			userRequestDTO.setRole("USER");
+			userRequestDTO.setRole("EMPLOYEE");
 			serviceImpl.registerUser(userRequestDTO);
 		});
 	}
@@ -207,7 +207,7 @@ class UserServiceImplTest {
 		UserRequestDTO userRequestDTO = new UserRequestDTO();
 		userRequestDTO.setUsername("username");
 		userRequestDTO.setPassword("abc@12");
-		userRequestDTO.setRole("USER");
+		userRequestDTO.setRole("EMPLOYEE");
 		serviceImpl.registerUser(userRequestDTO);
 	}
 

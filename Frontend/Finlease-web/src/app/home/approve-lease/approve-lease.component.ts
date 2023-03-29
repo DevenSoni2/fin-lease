@@ -33,8 +33,6 @@ export class ApproveLeaseComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.subscribe(params => {
             this.referenceId = params['referenceId'];
-            this.leaseService.getLeaseDetail(this.referenceId).subscribe(data => {
-            })
         });
     }
     updateLeaseApplication() {

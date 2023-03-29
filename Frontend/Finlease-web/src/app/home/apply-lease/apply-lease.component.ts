@@ -21,7 +21,7 @@ export class ApplyLeaseComponent {
   @ViewChild('accordion', { static: true }) Accordion: MatAccordion;
 
   constructor(public fb: FormBuilder, private leaseService: LeaseService,
-    private router: Router, public snackBar: MatSnackBar) {
+    private router: Router) {
     this.leaseForm = this.fb.group({
       createdBy: [{ value: sessionStorage.getItem("username"), disabled: true }],
       referenceId: [''],
@@ -81,7 +81,7 @@ export class ApplyLeaseComponent {
     this.saveApplyLease();
   }
   onProposedUserSelect() {
-    this.leaseService.getUserDet(this.leaseForm.controls.proposerUserId.value).subscribe(res => {
+    this.leaseService.getCustomerDet(this.leaseForm.controls.proposerUserId.value).subscribe(res => {
       this.leaseForm.controls.propsedUserName.setValue(res.userName);
       this.leaseForm.controls['propsedUserName'].disable();
 

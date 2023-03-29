@@ -51,7 +51,7 @@ public class FinanceLeaseApplicationController {
 	 * @return the response entity
 	 */
 	@PostMapping("/apply")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('EMPLOYEE') or hasAuthority('ADMIN')")
 	public ResponseEntity<?> applyLease(@Valid @RequestBody LeaseRequestDTO leaseRequestDTO) {
 		String referenceId = finLeaseService.applyLease(leaseRequestDTO);
 		return new ResponseEntity<>(new CustomResponse("Lease applied successfully", referenceId), HttpStatus.CREATED);
@@ -64,7 +64,7 @@ public class FinanceLeaseApplicationController {
 	 * @return the response entity
 	 */
 	@GetMapping("/info/{referenceId}")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('EMPLOYEE') or hasAuthority('ADMIN')")
 	public ResponseEntity<?> fetchLeaseInfo(@PathVariable String referenceId) {
 		return new ResponseEntity<>(finLeaseService.fetchLeaseInfo(referenceId), HttpStatus.OK);
 	}
@@ -91,7 +91,7 @@ public class FinanceLeaseApplicationController {
 	 * @return the response entity
 	 */
 	@GetMapping("/fetchProposerDetail/{userId}")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('EMPLOYEE') or hasAuthority('ADMIN')")
 	public ResponseEntity<?> fetchUserDetail(@PathVariable String userId) {
 		return new ResponseEntity<>(finLeaseService.fetchUserDetail(userId), HttpStatus.OK);
 	}
@@ -103,7 +103,7 @@ public class FinanceLeaseApplicationController {
 	 * @return the response entity
 	 */
 	@GetMapping("/list")
-	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+	@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('EMPLOYEE')")
 	public ResponseEntity<?> fetchAllLease(@RequestParam String status) {
 		return new ResponseEntity<>(finLeaseService.fetchLeaseList(status), HttpStatus.OK);
 	}

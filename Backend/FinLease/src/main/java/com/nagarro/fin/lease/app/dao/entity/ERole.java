@@ -8,5 +8,5 @@ public enum ERole {
 	/** The admin. */
 	ADMIN, 
  /** The user. */
- USER
+ EMPLOYEE
 }

@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nagarro.fin.lease.app.constants.ApplicationConstants;
+import com.nagarro.fin.lease.app.dao.entity.Customer;
 import com.nagarro.fin.lease.app.dao.entity.LeaseDetail;
 import com.nagarro.fin.lease.app.dao.entity.LeaseStatus;
 import com.nagarro.fin.lease.app.dao.entity.LeaseStatusCompisteKey;
 import com.nagarro.fin.lease.app.dao.entity.Role;
 import com.nagarro.fin.lease.app.dao.entity.User;
+import com.nagarro.fin.lease.app.dao.repository.CustomerRepository;
 import com.nagarro.fin.lease.app.dao.repository.LeaseRepository;
 import com.nagarro.fin.lease.app.dao.repository.LeaseStatusRepository;
 import com.nagarro.fin.lease.app.dao.repository.UserRepository;
@@ -46,6 +48,10 @@ public class FinLeaseServiceImpl implements FinLeaseService {
 	/** The lease status repository. */
 	@Autowired
 	private LeaseStatusRepository leaseStatusRepository;
+	
+	/** The customer repository. */
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	/**
 	 * Apply lease.
@@ -57,11 +63,13 @@ public class FinLeaseServiceImpl implements FinLeaseService {
 	@Transactional
 	public String applyLease(@Valid LeaseRequestDTO leaseRequestDTO) {
 		Optional<User> opCreatedUser = userRepository.findById(leaseRequestDTO.getCreatedBy());
-		Optional<User> opProposedUser = userRepository.findById(leaseRequestDTO.getProposerUserId());
-		if (!opCreatedUser.isPresent() || !opProposedUser.isPresent()) {
+		Optional<Customer> opProposedUser = customerRepository.findById(leaseRequestDTO.getProposerUserId());
+		if (!opCreatedUser.isPresent()) {
 			throw new GenericException("User doesn't exist", HttpStatus.NOT_FOUND);
 		}
-
+		if(!opProposedUser.isPresent()) {
+			throw new GenericException("Proposed User doesn't exist", HttpStatus.NOT_FOUND);
+		}
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setAssetMake(leaseRequestDTO.getAssetMake());
 		leaseDetail.setMonthlyIncome(leaseRequestDTO.getMonthlyIncome());
@@ -125,7 +133,7 @@ public class FinLeaseServiceImpl implements FinLeaseService {
 		response.setAssetModel(det.getAssetModel());
 		response.setAssetPurpose(det.getAssetPurpose());
 		response.setCreatedBy(det.getCreatedBy().getId());
-		response.setBuisnessUnit(det.getCreatedBy().getBuisnessUnit());
+		response.setBuisnessUnit(det.getProposerUserId().getBuisnessUnit());
 		response.setCreatedTime(det.getCreatedTime());
 		response.setCustomerAccountNumber(det.getCustomerAccountNumber());
 		response.setCustomerNumber(det.getCustomerNumber());
@@ -133,7 +141,7 @@ public class FinLeaseServiceImpl implements FinLeaseService {
 		response.setLeaseType(det.getLeaseType());
 		response.setPhoneNumber(det.getPhoneNumber());
 		response.setProposerUserId(det.getProposerUserId().getId());
-		response.setPropserUserName(det.getProposerUserId().getUsername());
+		response.setPropserUserName(det.getProposerUserId().getUserName());
 		response.setRequiredAmount(det.getRequiredAmount());
 		response.setReferenceId(det.getReferenceId());
 		response.setStatus(det.getStatus());

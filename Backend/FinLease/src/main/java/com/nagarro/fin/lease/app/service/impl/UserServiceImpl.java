@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 		Set<Role> roles = new HashSet<>();
 
 		if (Objects.isNull(userRequestDTO.getRole())) {
-			Role userRole = roleRepository.findByName(ERole.USER)
+			Role userRole = roleRepository.findByName(ERole.EMPLOYEE)
 					.orElseThrow(() -> new GenericException("Role not exist!", HttpStatus.NOT_FOUND));
 			roles.add(userRole);
 		} else {
@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserService {
 				Role adminRole = roleRepository.findByName(ERole.ADMIN)
 						.orElseThrow(() -> new GenericException("Role not exist", HttpStatus.NOT_FOUND));
 				roles.add(adminRole);
-			} else if (userRequestDTO.getRole().equals(ERole.USER.name())) {
-				Role adminRole = roleRepository.findByName(ERole.USER)
+			} else if (userRequestDTO.getRole().equals(ERole.EMPLOYEE.name())) {
+				Role adminRole = roleRepository.findByName(ERole.EMPLOYEE)
 						.orElseThrow(() -> new GenericException("Role not exist", HttpStatus.NOT_FOUND));
 				roles.add(adminRole);
 			} else {

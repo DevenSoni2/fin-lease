@@ -18,6 +18,9 @@ public class LeaseResponseDTO extends LeaseRequestDTO {
 	/** The propser user name. */
 	private String propserUserName;
 	
+	/** The proposed customer. */
+	private String proposedCustomer;
+	
 	/** The approval user id. */
 	private String approvalUserId;
 	
@@ -26,6 +29,14 @@ public class LeaseResponseDTO extends LeaseRequestDTO {
 	
 	/** The approval comment. */
 	private String approvalComment;
+
+	public String getProposedCustomer() {
+		return proposedCustomer;
+	}
+
+	public void setProposedCustomer(String proposedCustomer) {
+		this.proposedCustomer = proposedCustomer;
+	}
 
 	/**
 	 * Gets the approval user id.

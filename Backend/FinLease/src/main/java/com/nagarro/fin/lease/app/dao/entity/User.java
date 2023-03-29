@@ -24,7 +24,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
 	@GenericGenerator(name = "user_seq", strategy = "com.nagarro.fin.lease.app.config.StringPrefixedSequenceIdGenerator", parameters = {
 			@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-			@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "CUS_"),
+			@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "USER_"),
 			@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d") })
 	private String id;
 

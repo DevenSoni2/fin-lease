@@ -19,12 +19,14 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.nagarro.fin.lease.app.constants.ApplicationConstants;
+import com.nagarro.fin.lease.app.dao.entity.Customer;
 import com.nagarro.fin.lease.app.dao.entity.ERole;
 import com.nagarro.fin.lease.app.dao.entity.LeaseDetail;
 import com.nagarro.fin.lease.app.dao.entity.LeaseStatus;
 import com.nagarro.fin.lease.app.dao.entity.LeaseStatusCompisteKey;
 import com.nagarro.fin.lease.app.dao.entity.Role;
 import com.nagarro.fin.lease.app.dao.entity.User;
+import com.nagarro.fin.lease.app.dao.repository.CustomerRepository;
 import com.nagarro.fin.lease.app.dao.repository.LeaseRepository;
 import com.nagarro.fin.lease.app.dao.repository.LeaseStatusRepository;
 import com.nagarro.fin.lease.app.dao.repository.UserRepository;
@@ -54,6 +56,10 @@ class FinLeaseServiceImplTest {
 	/** The user repository. */
 	@Mock
 	private UserRepository userRepository;
+	
+	@Mock
+	private CustomerRepository customerRepository;
+	
 
 	/**
 	 * Test apply lease.
@@ -61,13 +67,14 @@ class FinLeaseServiceImplTest {
 	@Test
 	void testApplyLease() {
 		User user = new User();
+		Mockito.when(customerRepository.findById(Mockito.anyString())).thenReturn(Optional.of(new Customer()));
 		Mockito.when(userRepository.findById(Mockito.anyString())).thenReturn(Optional.of(user));
 		Mockito.when(leaseRepository.save(Mockito.any())).thenReturn(null);
 		LeaseRequestDTO req = new LeaseRequestDTO();
 		req.setCreatedBy("CUS_00001");
 		req.setProposerUserId("CUS_00001");
 		serviceImpl.applyLease(req);
-		Mockito.verify(userRepository, Mockito.times(2)).findById(Mockito.anyString());
+		Mockito.verify(userRepository, Mockito.times(1)).findById(Mockito.anyString());
 	}
 
 	/**
@@ -119,7 +126,7 @@ class FinLeaseServiceImplTest {
 	void testFetchLeaseInfoFound() {
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		Mockito.when(leaseRepository.findById(Mockito.anyString())).thenReturn(Optional.of(leaseDetail));
 		serviceImpl.fetchLeaseInfo("FRA2023032000001");
 		Mockito.verify(leaseRepository, Mockito.times(1)).findById(Mockito.anyString());
@@ -132,7 +139,7 @@ class FinLeaseServiceImplTest {
 	void testUpdateLeaseStatus() {
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		Mockito.when(userRepository.findById(Mockito.anyString())).thenReturn(Optional.of(new User()));
 		Mockito.when(leaseRepository.findById(Mockito.anyString())).thenReturn(Optional.of(leaseDetail));
 		UpdateLeaseStatusReq req = new UpdateLeaseStatusReq();
@@ -163,7 +170,7 @@ class FinLeaseServiceImplTest {
 	void testUpdateLeaseStatusWhenUserNotFound() {
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		Mockito.when(leaseRepository.findById(Mockito.anyString())).thenReturn(Optional.of(leaseDetail));
 		UpdateLeaseStatusReq req = new UpdateLeaseStatusReq();
 		req.setLeaseReferenceId("FRA2023032000001");
@@ -223,7 +230,7 @@ class FinLeaseServiceImplTest {
 		List<LeaseDetail> leaseDetails = new ArrayList<>();
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		leaseDetails.add(leaseDetail);
 		Mockito.when(leaseRepository.findByLeaseStatus()).thenReturn(leaseDetails);
 		serviceImpl.fetchLeaseList(ApplicationConstants.OPEN);
@@ -250,7 +257,7 @@ class FinLeaseServiceImplTest {
 		List<LeaseStatus> leaseDetails = new ArrayList<>();
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		LeaseStatus leaseStatus = new LeaseStatus();
 		LeaseStatusCompisteKey compisteKey = new LeaseStatusCompisteKey();
 		compisteKey.setReferenceId(leaseDetail);
@@ -293,7 +300,7 @@ class FinLeaseServiceImplTest {
 		Set<Role> roles = new HashSet<>();
 		Role role = new Role();
 		role.setId(2);
-		role.setName(ERole.USER);
+		role.setName(ERole.EMPLOYEE);
 		roles.add(role);
 		User user = new User();
 		user.setRoles(roles);
@@ -305,7 +312,7 @@ class FinLeaseServiceImplTest {
 		List<LeaseDetail> leaseDetails = new ArrayList<>();
 		LeaseDetail leaseDetail = new LeaseDetail();
 		leaseDetail.setCreatedBy(new User());
-		leaseDetail.setProposerUserId(new User());
+		leaseDetail.setProposerUserId(new Customer());
 		leaseDetails.add(leaseDetail);
 		Mockito.when(leaseRepository.findOwnCreatedLease(Mockito.anyString())).thenReturn(leaseDetails);
 		serviceImpl.fetchLeaseList(ApplicationConstants.OPEN);

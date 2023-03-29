@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { LoginService } from "../service/login.service";
 
@@ -8,8 +8,12 @@ import { LoginService } from "../service/login.service";
   styleUrls: ['./home.component.scss']
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  roleId: string;
   constructor(private router: Router, private loginService: LoginService) {
+  }
+  ngOnInit(): void {
+    this.roleId = sessionStorage.getItem('roleId');
   }
   homepgae() {
     this.router.navigate(['home/view-applied-lease']);
