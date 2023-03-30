@@ -23,7 +23,9 @@ import com.nagarro.fin.lease.app.dao.entity.User;
 import com.nagarro.fin.lease.app.dao.repository.RoleRepository;
 import com.nagarro.fin.lease.app.dao.repository.UserRepository;
 import com.nagarro.fin.lease.app.exceptions.GenericException;
+import com.nagarro.fin.lease.app.exceptions.TokenRefreshException;
 import com.nagarro.fin.lease.app.payload.request.LoginRequest;
+import com.nagarro.fin.lease.app.payload.request.TokenRefreshRequest;
 import com.nagarro.fin.lease.app.payload.request.UserRequestDTO;
 import com.nagarro.fin.lease.app.payload.response.JwtResponse;
 import com.nagarro.fin.lease.app.security.jwt.JwtUtils;
@@ -118,7 +120,8 @@ public class UserServiceImpl implements UserService {
 
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
 
-		return new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername());
+		return new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(), userDetails.getUsername(),
+				userDetails.getRoleId());
 	}
 
 	/**
@@ -131,6 +134,20 @@ public class UserServiceImpl implements UserService {
 		String userId = userDetails.getId();
 		refreshTokenService.deleteByUserId(userId);
 
+	}
+
+	@Override
+	public JwtResponse refreshToken(@Valid TokenRefreshRequest request) {
+		return refreshTokenService.findByToken(request.getRefreshToken())
+		        .map(refreshTokenService::verifyExpiration)
+		        .map(RefreshToken::getUser)
+		        .map(user -> {
+		          String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+		          Integer roleId = user.getRoles().stream().findFirst().get().getId();
+		          return new JwtResponse(token, request.getRefreshToken(), user.getId(), user.getUsername(), roleId);
+		        })
+		        .orElseThrow(() -> new TokenRefreshException(request.getRefreshToken(),
+		            "Refresh token is not in database!"));
 	}
 
 }

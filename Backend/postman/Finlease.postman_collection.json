@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "38f54253-f4c6-43fe-b68b-23f377cbadd6",
+		"name": "Finlease",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\": \"Admin@123\",\r\n    \"role\":\"ADMIN\",\r\n    \"name\":\" admin user1\",\r\n    \"buisnessUnit\":\"admin testing unit\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/registerUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"registerUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User (Normal user 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"employee2\",\r\n    \"password\": \"User@123\",\r\n    \"role\":\"EMPLOYEE\",\r\n    \"name\":\"Employee 2\",\r\n    \"buisnessUnit\":\"Employee unit 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/registerUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"registerUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register User( Normal User)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"employee1\",\r\n    \"password\": \"User@123\",\r\n    \"role\":\"EMPLOYEE\",\r\n    \"name\":\"Employee 1\",\r\n    \"buisnessUnit\":\"Employee unit 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/registerUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"registerUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apply Lease",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"createdTime\":\"2023-03-25T13:49:11.332\",\r\n    \"assetDeliveryDate\":\"2022-03-25T13:49:11.332\",\r\n    \"customerNumber\": \"121312\",\r\n    \"customerAccountNumber\": \"213232321312213\",\r\n    \"phoneNumber\":\"6767676767\",\r\n    \"assetMake\":\"HY879\",\r\n    \"assetModel\":\"2321SAD\",\r\n    \"assetPurpose\":\"SADSDSDSADSDSAD\",\r\n    \"amount\":\"2321321\",\r\n    \"leaseType\":\"Standard\",\r\n    \"requiredAmount\":\"9800\",\r\n    \"leasePeriodInMonth\":20,\r\n    \"createdBy\": \"CUS_00001\",\r\n    \"proposerUserId\": \"CUS_00001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lease/apply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"apply"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch lease detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/lease/info/FLA2023032500002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"info",
+						"FLA2023032500002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Lease Status",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"leaseReferenceId\": \"FLA2023032700001\",\r\n    \"status\":\"Approved\",\r\n    \"comment\": \"It is Approved\",\r\n    \"accountOfficerComment\": \"as per detail it approved\",\r\n    \"updatedBy\":\"CUS_00001\",\r\n    \"approvalDate\":\"2022-03-25T15:19:11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lease/updateLeaseStatus",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"updateLeaseStatus"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Log In",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\": \"Admin@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch all",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/lease/list?status=Closed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"list"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "Closed"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"cus1\",\r\n    \"name\":\" customer 1\",\r\n    \"buisnessUnit\":\"customer unit 1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lease/registerCustomer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"registerCustomer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Customer 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{AUTH}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\":\"cus2\",\r\n    \"name\":\" customer 2\",\r\n    \"buisnessUnit\":\"customer unit 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/lease/registerCustomer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"lease",
+						"registerCustomer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "AUTH",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3OTc0NDM0NiwiZXhwIjoxNjc5ODMwNzQ2fQ.n5WddC_tBsIkSJPxypdGlnyNQ-49eiWrsRjFulg1l_6O3OBD-be8jalfrwP7VnXDxPEV2AEHQBDLD8OHtObOyQ",
+			"type": "default"
+		}
+	]
+}

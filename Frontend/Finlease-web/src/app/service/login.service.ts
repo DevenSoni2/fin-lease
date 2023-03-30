@@ -19,6 +19,8 @@ export class LoginService {
     let url = AppConstants.BACKEND_HOST + '/api/lease/signout';
     return this.http.get<any>(url);
   }
-
-
+  refreshToken(request: any): Observable<any> {
+    let url = AppConstants.BACKEND_HOST + '/api/auth/refreshtoken';
+    return this.http.post<any>(url, request);
+  }
 }

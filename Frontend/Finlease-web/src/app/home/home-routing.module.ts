@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuardService } from "../service/auth.guard";
+import { SessionGuardService } from "../service/session.guard.service";
 import { ApplyLeaseComponent } from "./apply-lease/apply-lease.component";
 import { ApproveLeaseComponent } from "./approve-lease/approve-lease.component";
 import { HomeComponent } from "./home.component";
@@ -12,9 +13,9 @@ const routes: Routes = [
         component: HomeComponent,
         children: [
             { path: '', redirectTo: 'view-applied-lease', pathMatch: 'full' },
-            { path: 'applyLease', component: ApplyLeaseComponent},
-            { path: 'view-applied-lease', component: ViewAppliedLeaseComponent},
-            { path: 'approveLease/:referenceId', component: ApproveLeaseComponent, canActivate: [AuthGuardService], data:{roles:'1'}}
+            { path: 'applyLease', component: ApplyLeaseComponent, canActivate: [SessionGuardService]},
+            { path: 'view-applied-lease', component: ViewAppliedLeaseComponent, canActivate: [SessionGuardService]},
+            { path: 'approveLease/:referenceId', component: ApproveLeaseComponent, canActivate: [SessionGuardService, AuthGuardService], data:{roles:'1'}}
           ]
     },
 ];

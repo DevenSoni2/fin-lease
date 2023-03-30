@@ -19,6 +19,9 @@ public class JwtResponse {
 	
 	/** The refresh token. */
 	private String refreshToken;
+	
+	/** The role id. */
+	private Integer roleId;
 
 	/**
 	 * Instantiates a new jwt response.
@@ -28,11 +31,12 @@ public class JwtResponse {
 	 * @param id the id
 	 * @param username the username
 	 */
-	public JwtResponse(String accessToken, String refreshToken, String id, String username) {
+	public JwtResponse(String accessToken, String refreshToken, String id, String username, Integer roleId) {
 		this.token = accessToken;
 		this.refreshToken = refreshToken;
 		this.id = id;
 		this.username = username;
+		this.roleId = roleId;
 	}
 
 	/**
@@ -125,4 +129,12 @@ public class JwtResponse {
 		this.username = username;
 	}
 
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+	
 }

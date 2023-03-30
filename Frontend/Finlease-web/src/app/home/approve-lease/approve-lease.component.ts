@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { ActivatedRoute, Router } from "@angular/router";
 import { LeaseRequest } from "src/app/models/lease-request.model";
 import { LeaseUpdateModel } from "src/app/models/lease-update.model";
+import { ApplicationStorageService } from "src/app/service/application-storage.service";
 import { LeaseService } from "src/app/service/lease.service";
 
 @Component({
@@ -18,7 +19,7 @@ export class ApproveLeaseComponent implements OnInit {
     leaseApprovalForm: FormGroup;
 
     constructor(public fb: FormBuilder, private route: ActivatedRoute, private leaseService: LeaseService,
-        private router: Router) {
+        private router: Router, private applicationStorage: ApplicationStorageService) {
         this.leaseApprovalForm = this.fb.group({
             approvalDate: new FormControl({ value: new Date().toISOString().slice(0, -1), disabled: true }),
             approvalAmount: ['', Validators.required],
@@ -42,7 +43,7 @@ export class ApproveLeaseComponent implements OnInit {
         this.leaseUpdateReq.approvalDate = new Date(this.leaseApprovalForm.controls.approvalDate.value);
         this.leaseUpdateReq.status = this.leaseApprovalForm.controls.decision.value;
         this.leaseUpdateReq.leaseReferenceId = this.referenceId;
-        this.leaseUpdateReq.updatedBy = sessionStorage.getItem('user_id');
+        this.leaseUpdateReq.updatedBy = this.applicationStorage.get('userId');
         this.leaseUpdateReq.approvalAmount = this.leaseApprovalForm.controls.approvalAmount.value;
         this.leaseUpdateReq.monthlyRepayment = this.leaseApprovalForm.controls.monthlyRepayment.value;
         this.leaseUpdateReq.interestRate = this.leaseApprovalForm.controls.interestRate.value;

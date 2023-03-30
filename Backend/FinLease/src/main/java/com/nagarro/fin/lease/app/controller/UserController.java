@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nagarro.fin.lease.app.payload.request.LoginRequest;
+import com.nagarro.fin.lease.app.payload.request.TokenRefreshRequest;
 import com.nagarro.fin.lease.app.payload.request.UserRequestDTO;
 import com.nagarro.fin.lease.app.payload.response.CustomResponse;
 import com.nagarro.fin.lease.app.payload.response.JwtResponse;
@@ -53,4 +54,16 @@ public class UserController {
 		return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
 
 	}
+	
+	/**
+	 * Refreshtoken.
+	 *
+	 * @param request the request
+	 * @return the response entity
+	 */
+	@PostMapping("/refreshtoken")
+	public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+		return new ResponseEntity<>(userService.refreshToken(request), HttpStatus.OK);
+	}
+	
 }

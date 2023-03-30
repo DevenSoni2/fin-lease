@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
 import { Router } from "@angular/router";
+import { ApplicationStorageService } from "src/app/service/application-storage.service";
 import { LeaseService } from "src/app/service/lease.service";
 
 @Component({
@@ -15,10 +16,10 @@ export class ViewAppliedLeaseComponent implements OnInit {
     displayedColumns: string[] = ['referenceId', 'createdBy', 'buisnessUnit', 'customerName', 'customerNumber', 'createdTime', 'leaseType', 'assetMake', 'assetModel', 'status'];
     approvedDisplayedColumns: string[] = ['referenceId', 'createdBy', 'buisnessUnit', 'customerName', 'customerNumber', 'createdTime', 'leaseType', 'assetMake', 'assetModel', 'approvalUserId', 'status'];
     roleId: any;
-    constructor(private leaseService: LeaseService, private router: Router) { }
+    constructor(private leaseService: LeaseService, private router: Router, private applicationStorage: ApplicationStorageService) { }
 
     ngOnInit(): void {
-        this.roleId = sessionStorage.getItem("roleId");
+        this.roleId = this.applicationStorage.get("roleId");
         this.fetchList();
     }
     applyFilter1(filterValue: any) {

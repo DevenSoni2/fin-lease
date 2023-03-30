@@ -3,6 +3,7 @@ package com.nagarro.fin.lease.app.service;
 import javax.validation.Valid;
 
 import com.nagarro.fin.lease.app.payload.request.LoginRequest;
+import com.nagarro.fin.lease.app.payload.request.TokenRefreshRequest;
 import com.nagarro.fin.lease.app.payload.request.UserRequestDTO;
 import com.nagarro.fin.lease.app.payload.response.JwtResponse;
 
@@ -31,5 +32,7 @@ public interface UserService {
 	 * Signout.
 	 */
 	void signout();
+
+	JwtResponse refreshToken(@Valid TokenRefreshRequest request);
 
 }

@@ -19,6 +19,7 @@ import { ApplyLeaseComponent } from "./apply-lease/apply-lease.component";
 import { ApproveLeaseComponent } from "./approve-lease/approve-lease.component";
 import { ViewAppliedLeaseComponent } from "./view-applied-lease/view-applied-lease.component";
 import { AuthGuardService } from "../service/auth.guard";
+import { SessionGuardService } from "../service/session.guard.service";
 
 @NgModule({
   declarations: [HomeComponent, ApplyLeaseComponent, ApproveLeaseComponent,
@@ -46,7 +47,7 @@ import { AuthGuardService } from "../service/auth.guard";
     MatIconModule,
     MatSnackBarModule
   ],
-  providers: [MatDatepickerModule, AuthGuardService
+  providers: [MatDatepickerModule, AuthGuardService, SessionGuardService
   ]
 })
 export class HomeModule {

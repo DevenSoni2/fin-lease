@@ -42,7 +42,7 @@ class UserControllerTest {
 	@Test
 	void testAuthenticateUser() {
 		Mockito.when(service.authenticateUser(Mockito.any()))
-				.thenReturn(new JwtResponse("abc", "abc", "CUS_0001", "USERNAME"));
+				.thenReturn(new JwtResponse("abc", "abc", "CUS_0001", "USERNAME",1));
 		controller.authenticateUser(new LoginRequest());
 		Mockito.verify(service, Mockito.times(1)).authenticateUser(Mockito.any());
 	}

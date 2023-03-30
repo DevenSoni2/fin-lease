@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { MatAccordion, MatSnackBar } from "@angular/material";
 import { Router } from "@angular/router";
 import { LeaseRequest } from "src/app/models/lease-request.model";
+import { ApplicationStorageService } from "src/app/service/application-storage.service";
 import { LeaseService } from "src/app/service/lease.service";
 
 @Component({
@@ -22,9 +23,9 @@ export class ApplyLeaseComponent {
   @ViewChild('accordion', { static: true }) Accordion: MatAccordion;
 
   constructor(public fb: FormBuilder, private leaseService: LeaseService,
-    private router: Router) {
+    private router: Router, private applicationStorage: ApplicationStorageService) {
     this.leaseForm = this.fb.group({
-      createdBy: [{ value: sessionStorage.getItem("username"), disabled: true }],
+      createdBy: [{ value: this.applicationStorage.get("username"), disabled: true }],
       referenceId: [''],
       createdTime: new FormControl({ value: new Date().toISOString().slice(0, -1), disabled: true }),
       customerNumber: ['', Validators.required],
@@ -70,7 +71,7 @@ export class ApplyLeaseComponent {
     this.leaseReq.assetMake = this.leaseForm.controls.assetMake.value;
     this.leaseReq.assetModel = this.leaseForm.controls.assetModel.value;
     this.leaseReq.assetPurpose = this.leaseForm.controls.assetPurpose.value;
-    this.leaseReq.createdBy = sessionStorage.getItem('user_id');
+    this.leaseReq.createdBy = this.applicationStorage.get('userId');
     this.leaseReq.createdTime = this.leaseForm.controls.createdTime.value;
     this.leaseReq.customerAccountNumber = this.leaseForm.controls.customerAccountNumber.value;
     this.leaseReq.customerNumber = this.leaseForm.controls.customerNumber.value;
